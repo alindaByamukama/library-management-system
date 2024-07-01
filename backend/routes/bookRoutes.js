@@ -7,6 +7,7 @@ router.get('/books', async (req, res) => {
         const books = await Book.findAll()
         res.json(books)
     } catch (err) {
+        console.error(err)
         res.status(500).send('Server error')
     }
 })
