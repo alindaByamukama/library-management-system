@@ -7,7 +7,7 @@ const PORT = process.env.PORT || 8080
 
 app.use(express.json())
 
-app.use('./api', bookRoutes)
+app.use('/api', bookRoutes)
 
 app.get('/', (req, res) => {
     res.send('Library Management System API')
