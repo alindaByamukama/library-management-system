@@ -2,6 +2,7 @@ const express = require('express')
 const router = express.Router()
 const Book = require('../models/Book')
 
+// Get all books
 router.get('/books', async (req, res) => {
     try {
         const books = await Book.findAll()
@@ -11,5 +12,7 @@ router.get('/books', async (req, res) => {
         res.status(500).send('Server error')
     }
 })
+
+
 
 module.exports = router
