@@ -12,4 +12,14 @@ router.post('/transactions', async (req, res) => {
     }
 })
 
+// Get all transactions
+router.get('/transactions', async (req, res) => {
+    try {
+        const transactions = await Transaction.findAll()
+        res.json(transactions)
+    } catch (error) {
+        res.status(500).send('Server error')
+    }
+})
+
 module.exports = router
