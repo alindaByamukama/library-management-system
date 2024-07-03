@@ -25,4 +25,23 @@ router.post('/books', async (req, res) => {
     }
 })
 
+// Update a book
+router.put('/books/:id', async (req, res) => {
+    const { id } = req.params
+    const { title, author, isbn } = req.body
+    try {
+        const book = await Book.findByPk(id)
+        if(book) {
+            book.title = titlebook.author = author
+            book.isbn = isbn
+            await book.save()
+            res.json(book)
+        } else {
+            res.status(404).send('Book not found')
+        }
+    } catch (error) {
+        res.status(500).send('Server error')
+    }
+})
+
 module.exports = router
