@@ -39,4 +39,20 @@ router.put('/transactions/:id', async (req, res) => {
     }
 })
 
+// Delete a transaction
+router.delete('/transaction/:id', async (req, res) => {
+    const { id } = req.params
+    try {
+        const transaction = await Transaction.findByPk(id)
+        if (transaction) {
+            await transaction.destroy()
+            res.json({ message: 'Transaction deleted' })
+        } else {
+            res.status(404).send('Transaction not found')
+        }
+    } catch (error) {
+        res.status(500).send('Server error')
+    }
+})
+
 module.exports = router
