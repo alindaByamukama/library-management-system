@@ -22,4 +22,21 @@ router.get('/transactions', async (req, res) => {
     }
 })
 
+// Return a book
+router.put('/transactions/:id', async (req, res) => {
+    const { id } = req.params
+    try {
+        const transaction = await Transaction.findByPk(id)
+        if (transaction) {
+            transaction.returnedAt = new Date()
+            await transaction.save()
+            res.json(transaction)
+        } else {
+            res.status(404).send('Transaction not found')
+        }
+    } catch (error) {
+        res.status(500).send('Server error')
+    }
+})
+
 module.exports = router
