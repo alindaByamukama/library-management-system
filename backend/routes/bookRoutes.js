@@ -44,4 +44,20 @@ router.put('/books/:id', async (req, res) => {
     }
 })
 
+// Delete a book
+router.delete('/books/:id', async (req, res) => {
+    const { id } = req.params
+    try {
+        const book = await Book.findByPk(id)
+        if (book) {
+            await book.destroy()
+            res.json({ message: 'Book deleted' })
+        } else {
+            res.status(404).send('Book not found')
+        }
+    } catch (error) {
+        res.status(500).send('Server error')
+    }
+})
+
 module.exports = router
