@@ -15,6 +15,21 @@ router.post('/register', async (req, res) => {
     }
 })
 
+// Login a user
+router.post('/login', async (req, res) => {
+    const { email, password } = req.body
+    try {
+        const user = await User.findOne({ where: { email } })
+        if (!user || !await bcrypt.compare(password, user.password)) {
+            return res.status(401).json({ error: 'Invalid email or password' })
+        }
+        const token = jwt.sign({ id: user.id }, 'your_jwt_secret', { expiresIn: '1hr'})
+        res.json({ token })
+    } catch (error) {
+        res.status(500).json({ error: 'Error logging in' })
+    }
+})
+
 // Get all users
 router.get('/users', async (req, res) => {
     try {
